@@ -39,9 +39,14 @@ public class Car {
                 status = "Silnik został wyłączony. Awaria silnika, lub brak paliwa";
                 return status;
             } else
-                isEngineWorking
+                status = "Silnik wciąż pracuje";
+            return status;
         } else if ((isEngineOperational || isTankNotEmpty) == false) {
-            return isEngineWorking = false;
+            status = "Silnik nie może zostać uruchomiony. Awaria silnika, lub brak paliwa";
+            return status;
+        } else {
+            status = "Uruchamiam silnik";
+            return status;
         }
     }
 }
