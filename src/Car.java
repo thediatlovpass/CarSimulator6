@@ -11,42 +11,47 @@ public class Car {
     private final static int CAR_IS_WORKING_FUEL_FILLER_FLAP_OPEN = 400;
     private final static int CAR_IS_WORKING_DOORS_AND_TRUNK_OPEN = 500;
 
-    public static int status() {
-        if (isTankNotEmpty) {
-            if (isEngineOperational) {
-                if (isFuelFillerFlapClosed) {
-                    if (areDoorsAndTrunkClosed) {
-                        return CAR_IS_WORKING;
+    public static int start() {
+        if (isEngineWorking) {
+            if (isTankNotEmpty) {
+                if (isEngineOperational) {
+                    if (isFuelFillerFlapClosed) {
+                        if (areDoorsAndTrunkClosed) {
+                            return CAR_IS_WORKING;
+                        } else {
+                            return CAR_IS_WORKING_DOORS_AND_TRUNK_OPEN;
+                        }
                     } else {
-                        return CAR_IS_WORKING_DOORS_AND_TRUNK_OPEN;
+                        return CAR_IS_WORKING_FUEL_FILLER_FLAP_OPEN;
                     }
                 } else {
-                    return CAR_IS_WORKING_FUEL_FILLER_FLAP_OPEN;
+                    isEngineWorking = false;
+                    return CAR_IS_NOT_WORKING_ENGINE_FAILURE;
                 }
             } else {
-                return CAR_IS_NOT_WORKING_ENGINE_FAILURE;
-            }
-        } else {
-            return CAR_IS_NOT_WORKING_LACK_OF_FUEL;
-        }
-    }
-
-    public String start() {
-        String status;
-        if (isEngineWorking) {
-            if ((isEngineOperational || isTankNotEmpty) == false) {
                 isEngineWorking = false;
-                status = "Silnik został wyłączony. Awaria silnika, lub brak paliwa";
+                return CAR_IS_NOT_WORKING_LACK_OF_FUEL;
+            }
+        } else if
+    }
+            public String status () {
+            String status;
+            if (isEngineWorking) {
+                if (!isEngineOperational) {
+                    isEngineWorking = false;
+                    status = "Silnik został wyłączony. Awaria silnika";
+                    return status;
+                } else if (!isTankNotEmpty) {
+                    isEngineWorking = false;
+                    status = "Silnik został wyłączony. Brak paliwa";
+                }
+                status();
+            } else if ((isEngineOperational || isTankNotEmpty) == false) {
+                status = "Silnik nie może zostać uruchomiony. Awaria silnika, lub brak paliwa";
                 return status;
-            } else
-                status = "Silnik wciąż pracuje";
-            return status;
-        } else if ((isEngineOperational || isTankNotEmpty) == false) {
-            status = "Silnik nie może zostać uruchomiony. Awaria silnika, lub brak paliwa";
-            return status;
-        } else {
-            status = "Uruchamiam silnik";
-            return status;
+            } else {
+                status = "Uruchamiam silnik";
+                return status;
+            }
         }
     }
-}
